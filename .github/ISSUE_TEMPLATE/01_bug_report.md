@@ -1,6 +1,7 @@
 ---
 name: "🐛 Bug report"
 about: Tell us about a problem you are experiencing
+labels: bug
 ---
 
 <!--
@@ -20,7 +21,8 @@ about: Tell us about a problem you are experiencing
 -->
 
 <!--
-4. Update the following if there are additional labels, reviewers, or assignees.
+4. Ask @miq-bot to apply additional labels, reviewers, or assignees.
    (As described in https://github.com/ManageIQ/miq_bot#requested-tasks)
+   e.g. `@miq-bot add-label label_name`
+        `@miq-bot add-reviewer @name`
 -->
-@miq-bot add-label bug
