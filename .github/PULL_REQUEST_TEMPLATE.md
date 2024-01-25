@@ -10,7 +10,8 @@
 -->
 
 <!--
-3. Tell @miq-bot to label this PR with an appropriate scope label (bug, enhancement, etc), and any additional reviewers or assignees.
+3. Ask @miq-bot to apply a scope label (bug, enhancement, etc) and any additional reviewers or assignees.
    (As described in https://github.com/ManageIQ/miq_bot#requested-tasks)
-   e.g. `@miq-bot add-label bug`, `@miq-bot add-reviewer @name`
+   e.g. `@miq-bot add-label label_name`
+        `@miq-bot add-reviewer @name`
 -->

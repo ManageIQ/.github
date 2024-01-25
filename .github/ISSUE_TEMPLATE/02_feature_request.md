@@ -1,6 +1,7 @@
 ---
-name: ":bulb: Enhancement request"
+name: "💡 Enhancement request"
 about: Suggest an idea for this project
+labels: enhancement
 ---
 
 <!--
@@ -8,7 +9,8 @@ about: Suggest an idea for this project
 -->
 
 <!--
-2. Update the following if there are additional labels, reviewers, or assignees.
+2. Ask @miq-bot to apply additional labels, reviewers, or assignees.
    (As described in https://github.com/ManageIQ/miq_bot#requested-tasks)
+   e.g. `@miq-bot add-label label_name`
+        `@miq-bot add-reviewer @name`
 -->
-@miq-bot add-label enhancement
