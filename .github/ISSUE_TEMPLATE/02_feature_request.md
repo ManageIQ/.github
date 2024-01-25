@@ -1,5 +1,5 @@
 ---
-name: ":bulb: Enhancement request"
+name: "💡 Enhancement request"
 about: Suggest an idea for this project
 ---
 
