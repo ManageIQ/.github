@@ -1,4 +1,4 @@
-![ManageIQ logo](manageiq-logo-standard-white.png)
+![ManageIQ logo](https://raw.githubusercontent.com/ManageIQ/.github/master/profile/manageiq-logo-standard-white.png)
 
 ## Discover, Optimize, and Control your Hybrid IT
 
