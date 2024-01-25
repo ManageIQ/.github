@@ -15,14 +15,14 @@ IT environments.  It has the following feature sets:
 
 ## Get Started
 
-*  [**Download community builds** for your platform](http://manageiq.org/download/)
-*  [**Fork the source** to contribute](https://github.com/ManageIQ/manageiq)
+*  [**Download** community builds for your platform](http://manageiq.org/download/)
 *  [**Read** the documentation](https://manageiq.org/docs)
+*  [**Contribute** to the source code](https://github.com/ManageIQ/manageiq)
 
 ## Learn more
 
 *  [**Visit** our website](https://manageiq.org)
-*  [**Discuss** ManageIQ with developers and power users](https://github.com/orgs/ManageIQ/discussions)
-*  [**Chat** with contributors on Gitter](https://gitter.im/ManageIQ/manageiq)
-*  [**Submit** bug reports and feature requests on GitHub](https://github.com/ManageIQ/manageiq/issues?state=open)
+*  [**Discuss** with developers and power users](https://github.com/orgs/ManageIQ/discussions)
+*  [**Chat** with contributors](https://gitter.im/ManageIQ/manageiq)
+*  [**Submit** bug reports and feature requests](https://github.com/ManageIQ/manageiq/issues?state=open)
 *  [**Watch** some of our videos](https://www.youtube.com/user/ManageIQVideo)
