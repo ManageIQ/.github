@@ -2,6 +2,10 @@
 
 ## Discover, Optimize, and Control your Hybrid IT
 
+[![CNCF Landscape](https://img.shields.io/badge/CNCF%20Landscape-5699C6?logo=cncf)](https://landscape.cncf.io/?item=provisioning--automation-configuration--manageiq)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/4282/badge)](https://www.bestpractices.dev/projects/4282)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/ManageIQ/manageiq/badge)](https://api.securityscorecards.dev/projects/github.com/ManageIQ/manageiq)
+
 ### Manage containers, virtual machines, networks, and storage from a single platform
 
 ManageIQ is an open-source Management Platform that delivers the insight, control, and
