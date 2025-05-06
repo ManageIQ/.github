@@ -1,0 +1,49 @@
+name: Update yarn.lock
+
+on:
+  workflow_call:
+    inputs:
+      pr_repository:
+        description: The repository to which the PR branch should be pushed
+        required: true
+        type: string
+    secrets:
+      pr_token:
+        required: true
+jobs:
+  update-yarn-lock:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up system
+      run: bin/before_install
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: "18"
+        cache: yarn
+        registry-url: https://npm.manageiq.org/
+    - name: Update yarn.lock
+      env:
+        YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+      run: |
+        rm -f yarn.lock
+        yarn install --mode update-lockfile
+        git --no-pager diff
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7
+      with:
+        add-paths: |
+          yarn.lock
+        push-to-fork: ${{ inputs.pr_repository }}
+        token: ${{ secrets.pr_token }}
+        branch: update_yarn_lock
+        delete-branch: true
+        author: ManageIQ Bot <bot@manageiq.org>
+        committer: ManageIQ Bot <bot@manageiq.org>
+        commit-message: Update yarn.lock with latest dependencies
+        title: Update yarn.lock with latest dependencies
+        body: Update yarn.lock with latest dependencies
+        labels: dependencies
+        team-reviewers: ManageIQ/committers-ui
+        assignees: GilbertCherrie
