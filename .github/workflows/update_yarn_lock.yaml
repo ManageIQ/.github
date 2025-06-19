@@ -7,6 +7,11 @@ on:
         description: The repository to which the PR branch should be pushed
         required: true
         type: string
+      node-version:
+        description: The node version to use
+        required: true
+        type: string
+        default: "20"
     secrets:
       pr_token:
         required: true
@@ -20,7 +25,7 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v4
       with:
-        node-version: "18"
+        node-version: ${{ inputs.node-version }}
         cache: yarn
         registry-url: https://npm.manageiq.org/
     - name: Update yarn.lock
