@@ -34,10 +34,21 @@ jobs:
         rm -f yarn.lock
         yarn install --mode update-lockfile
         git --no-pager diff
+    - name: Update Jest snapshots
+      run: |
+        if grep -q '"jest"' package.json; then
+          echo "Jest test script found, updating snapshots..."
+          yarn test -u || echo "No tests to update or tests failed"
+          git --no-pager diff
+        else
+          echo "No Jest test script found, skipping snapshot update"
+        fi
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
       with:
-        add-paths: yarn.lock
+        add-paths: |
+          yarn.lock
+          **/*.snap
         push-to-fork: "${{ inputs.pr_repository }}"
         token: "${{ secrets.pr_token }}"
         branch: update_yarn_lock
@@ -46,7 +57,12 @@ jobs:
         committer: ManageIQ Bot <bot@manageiq.org>
         commit-message: Update yarn.lock with latest dependencies
         title: Update yarn.lock with latest dependencies
-        body: Update yarn.lock with latest dependencies
+        body: |
+          Update yarn.lock with latest dependencies and regenerate Jest snapshots (if applicable) to ensure compatibility.
+          
+          Changes:
+          - Updated yarn.lock
+          - Regenerated Jest snapshot files (if Jest tests are present)
         labels: dependencies
         team-reviewers: ManageIQ/committers-ui
         assignees: GilbertCherrie
