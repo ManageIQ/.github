@@ -38,7 +38,7 @@ jobs:
       run: |
         if grep -q '"jest"' package.json; then
           echo "Jest test script found, updating snapshots..."
-          yarn test -u || echo "No tests to update or tests failed"
+          yarn jest -u || echo "No tests to update or tests failed"
           git --no-pager diff
         else
           echo "No Jest test script found, skipping snapshot update"
@@ -58,11 +58,7 @@ jobs:
         commit-message: Update yarn.lock with latest dependencies
         title: Update yarn.lock with latest dependencies
         body: |
-          Update yarn.lock with latest dependencies and regenerate Jest snapshots (if applicable) to ensure compatibility.
-          
-          Changes:
-          - Updated yarn.lock
-          - Regenerated Jest snapshot files (if Jest tests are present)
+          Update yarn.lock with latest dependencies
         labels: dependencies
         team-reviewers: ManageIQ/committers-ui
         assignees: GilbertCherrie
