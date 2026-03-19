@@ -35,6 +35,7 @@ jobs:
       run: |
         if grep -q '"jest"' package.json; then
           echo "Jest test script found, updating snapshots..."
+          yarn install
           yarn jest -u || echo "No tests to update or tests failed"
           git --no-pager diff
         else
