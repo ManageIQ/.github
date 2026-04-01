@@ -30,7 +30,9 @@ jobs:
       run: |
         rm -f yarn.lock
         yarn install --mode update-lockfile
-        git --no-pager diff
+        echo "::group::yarn.lock changes"
+        git --no-pager diff -- yarn.lock
+        echo "::endgroup::"
     - name: Detect Jest availability
       id: detect-jest
       run: |
@@ -46,8 +48,12 @@ jobs:
       run: |
         echo "Jest test script found, updating snapshots..."
         yarn install
+        echo "::group::Snapshot update"
         yarn jest -u || echo "No tests to update or tests failed"
-        git --no-pager diff
+        echo "::endgroup::"
+        echo "::group::Snapshot changes"
+        git --no-pager diff -- . ":(exclude)yarn.lock"
+        echo "::endgroup::"
     - name: Build add-paths list
       id: build-paths
       run: |
