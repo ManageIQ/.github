@@ -45,6 +45,8 @@ jobs:
         fi
     - name: Update Jest snapshots
       if: steps.detect-jest.outputs.has_jest == 'true'
+      env:
+        CYPRESS_INSTALL_BINARY: 0
       run: |
         echo "Jest test script found, updating snapshots..."
         yarn install
