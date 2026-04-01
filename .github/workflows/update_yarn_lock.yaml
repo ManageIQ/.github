@@ -31,22 +31,34 @@ jobs:
         rm -f yarn.lock
         yarn install --mode update-lockfile
         git --no-pager diff
-    - name: Update Jest snapshots
+    - name: Detect Jest availability
+      id: detect-jest
       run: |
         if grep -q '"jest"' package.json; then
-          echo "Jest test script found, updating snapshots..."
-          yarn install
-          yarn jest -u || echo "No tests to update or tests failed"
-          git --no-pager diff
+          echo "has_jest=true" >> $GITHUB_OUTPUT
+          echo "Jest found in package.json"
         else
-          echo "No Jest test script found, skipping snapshot update"
+          echo "has_jest=false" >> $GITHUB_OUTPUT
+          echo "Jest not found in package.json"
         fi
+    - name: Update Jest snapshots
+      if: steps.detect-jest.outputs.has_jest == 'true'
+      run: |
+        echo "Jest test script found, updating snapshots..."
+        yarn install
+        yarn jest -u || echo "No tests to update or tests failed"
+        git --no-pager diff
+    - name: Build add-paths list
+      id: build-paths
+      run: |
+        echo "paths<<EOF" >> $GITHUB_OUTPUT
+        echo 'yarn.lock' >> $GITHUB_OUTPUT
+        [ "${{ steps.detect-jest.outputs.has_jest }}" == "true" ] && echo '**/*.snap' >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
       with:
-        add-paths: |
-          yarn.lock
-          **/*.snap
+        add-paths: ${{ steps.build-paths.outputs.paths }}
         push-to-fork: "${{ inputs.pr_repository }}"
         token: "${{ secrets.pr_token }}"
         branch: update_yarn_lock
