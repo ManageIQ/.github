@@ -7,7 +7,9 @@ on:
         required: true
         type: string
     secrets:
-      pr_token:
+      GHA_STATUS_SLACK_WEBHOOK_URL:
+        required: true
+      PR_TOKEN:
         required: true
 permissions:
   contents: read
@@ -68,7 +70,7 @@ jobs:
       with:
         add-paths: ${{ steps.build-paths.outputs.paths }}
         push-to-fork: "${{ inputs.pr_repository }}"
-        token: "${{ secrets.pr_token }}"
+        token: "${{ secrets.PR_TOKEN }}"
         branch: update_yarn_lock
         delete-branch: true
         author: ManageIQ Bot <bot@manageiq.org>
@@ -80,3 +82,14 @@ jobs:
         labels: dependencies
         team-reviewers: ManageIQ/committers-ui
         assignees: GilbertCherrie
+  on_failure:
+    needs: update-yarn-lock
+    if: always() && github.repository_owner == 'ManageIQ' && needs.update-yarn-lock.result != 'success'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Notify on failure
+      uses: slackapi/slack-github-action@v3
+      with:
+        webhook: "${{ secrets.GHA_STATUS_SLACK_WEBHOOK_URL }}"
+        webhook-type: incoming-webhook
+        payload: 'text: ":red_circle: *GitHub Actions workflow ${{ needs.update-yarn-lock.result }}*\n${{ github.workflow_ref }}\n${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"'
