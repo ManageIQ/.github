@@ -84,7 +84,7 @@ jobs:
         assignees: GilbertCherrie
   on_failure:
     needs: update-yarn-lock
-    if: always() && github.repository_owner == 'ManageIQ' && needs.update-yarn-lock.result != 'success'
+    if: always() && github.repository_owner == 'ManageIQ' && needs.update-yarn-lock.result == 'failure'
     runs-on: ubuntu-latest
     steps:
     - name: Notify on failure
