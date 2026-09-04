@@ -3,8 +3,8 @@ on:
   workflow_call:
     inputs:
       pr_repository:
-        description: The repository to which the PR branch should be pushed
-        required: true
+        description: The repository to which the PR branch should be pushed (defaults to miq-bot/<this-repo-name>)
+        required: false
         type: string
     secrets:
       GHA_STATUS_SLACK_WEBHOOK_URL:
@@ -65,11 +65,16 @@ jobs:
         echo 'yarn.lock' >> $GITHUB_OUTPUT
         [ "${{ steps.detect-jest.outputs.has_jest }}" == "true" ] && echo '**/*.snap' >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
+    - name: Resolve PR fork repository
+      id: resolve-fork
+      run: echo "repo=${INPUT_PR_REPOSITORY:-miq-bot/${GITHUB_REPOSITORY#*/}}" >> $GITHUB_OUTPUT
+      env:
+        INPUT_PR_REPOSITORY: ${{ inputs.pr_repository }}
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v8
       with:
         add-paths: ${{ steps.build-paths.outputs.paths }}
-        push-to-fork: "${{ inputs.pr_repository }}"
+        push-to-fork: "${{ steps.resolve-fork.outputs.repo }}"
         token: "${{ secrets.PR_TOKEN }}"
         branch: update_yarn_lock
         delete-branch: true
